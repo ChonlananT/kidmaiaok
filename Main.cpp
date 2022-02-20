@@ -3,7 +3,6 @@
 #include <string>
 #include <ctime>
 
-
 using namespace std;
 
 void HUD();
@@ -15,6 +14,7 @@ void LevelUp();
 
 string name = " ";
 int level = 0, xp = 0, health = 0, totalHealth = 0, maxHealth = 0, nextLevel = 0, heal = 0;
+int scalpelState = 0, ppeState = 0;
 
 string monsterName[] = {"Nurse","Researcher","Doctor","Psychologist","Director","Janitor","Security guard"}; //ถ้าคิดตัวไรออกอีกก็เพิ่มได้ (ป้อง)
 string currentMonster = " ";
@@ -94,19 +94,65 @@ void Moving() {
         }
     }
     else if(choice == 2){
-        //************************************ ให้พี่บิ๊กทำต่อจากตรงนี้แทน เพิ่มระบบ inventory เมื่อผู้เล่นเลือกเลข 2************************************************
-
+        //************************************ ให้ว่านทำต่อจากตรงนี้แทน เพิ่มระบบ equipment เมื่อผู้เล่นเลือกเลข 2************************************************
+        //ตอนนี้เพิ่มไอเทมไปสองชิ้น เเละ เพิ่มระบบเช็คไอเทม เเต่ยังไม่ได้ใส่ stat ฝากทำด้วย
     }
     else if(choice == 3){
-       
-
-    }
-    else{
-        cout << "Wrong Input!!!";
+        system("cls");
+        cout << "You begin exploring this room.\n";
         Sleep(500);
-        Moving();
-    } 
-}
+        system("cls");
+        cout << "You begin exploring this room..\n";
+        Sleep(500);
+        system("cls");
+        cout << "You begin exploring this room...\n";
+        Sleep(500);
+        system("cls");
+       
+        int temp = rand()%100 + 1; 
+        if(temp <= 10){
+            ::scalpelState++;
+            if(::scalpelState == 1){
+                cout << "Wow!! You found a Scalpel. It can increase your damage if you equip it.";
+                Sleep(2500);
+                HUD();
+                Moving();
+            }else{
+                ::scalpelState = 1;
+                cout << "You found nothing :(";
+                Sleep(750);
+                HUD();
+                Moving();            
+            }
+        }else if(temp > 10 && temp <= 20){
+            ::ppeState++;
+            if(::ppeState == 1){
+                cout << "Wow!! You found a PPE Suit. It can increase your max HP if you equip it.";
+                Sleep(2500);
+                HUD();
+                Moving();
+            }else{
+                ::ppeState = 1;
+                cout << "You found nothing :(";
+                Sleep(750);
+                HUD();
+                Moving();            
+            }
+        }else if(temp > 20 && temp <=60){
+            cout << "You found nothing :(";
+            Sleep(750);
+            HUD();
+            Moving();   
+        }else{
+            CreateMonster();
+            string monster = monsterName[rand()%6];
+            cout << "The " << monster << " is coming for you! Prepare to fight.\n";
+            currentMonster = monster;
+            Sleep(1500);
+            Combat();
+        }
+    }
+} 
 
 void CreateMonster(){ // ระบบสุ่มเกิดมอน พี่เธียรปรับได้ (stat สุ่มของ Monster) เพราะตอนนี้ยังไม่ค่อยบาลานซ์
     monsterLevel = (rand()%3) + level;
