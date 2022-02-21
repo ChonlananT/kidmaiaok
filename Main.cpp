@@ -14,7 +14,7 @@ void LevelUp();
 
 string name = " ";
 int level = 0, xp = 0, health = 0, totalHealth = 0, maxHealth = 0, nextLevel = 0, heal = 0;
-int scalpelState = 0, ppeState = 0;
+int scalpelState = 0, ppeState = 0,SPcooldown = 0;
 
 string monsterName[] = {"Nurse","Researcher","Doctor","Psychologist","Director","Janitor","Security guard"}; //ถ้าคิดตัวไรออกอีกก็เพิ่มได้ (ป้อง)
 string currentMonster = " ";
@@ -180,8 +180,9 @@ void Combat(){
     if(totalHealth >= 1 && monsterHp >= 1){
         cout << "\n";
         cout << "1. Attack\n";
-        cout << "2. Use item\n";
-        cout << "3. RUN\n";
+        cout << "2. Special Attack\n";
+        cout << "3. Use item\n";
+        cout << "4. RUN\n";
         cout << "\n";
         cin >> playerAttack;
 
@@ -219,14 +220,70 @@ void Combat(){
             Combat();
         }
         else if(playerAttack == 2){
-            //ใช้ของ (ยังไม่ได้ทำ)
-
-            Sleep(1000);
-            Combat();
-
-
+            if(::SPcooldown == 0){ 
+                if(level >= 4){
+                    ::SPcooldown++;
+                    system("cls");
+                    cout << "You are using the SPECIAL ATTACK.\n";
+                    Sleep(500);
+                    system("cls");
+                    cout << "You are using the SPECIAL ATTACK..\n";
+                    Sleep(500);
+                    system("cls");
+                    cout << "You are using the SPECIAL ATTACK...\n";
+                    Sleep(500);
+                    system("cls");
+                    cout << "The " << currentMonster << " suffered from your Special Attack by " << (100*(level/2))/2 << " damage!!\n";
+                    monsterHp = monsterHp - (100*(level/2))/2;
+                    Sleep(1500);
+                    CombatHUD();
+                
+                    if(monsterHp >= 1){
+                        cout << "\n";
+                        cout << "Monster is Atacking...\n";
+                        totalHealth = totalHealth - monsterAttack;
+                        cout << "You lost " << monsterAttack << " hp and your current hp is " << totalHealth << "\n";
+                            if(totalHealth <= 0){
+                                totalHealth = 0;
+                                system("cls");
+                                cout << "You DIED! \nYou were level: " << level << " you got killed by " << currentMonster << ".\n";
+                                Sleep(1000);
+                                cout << "You can't get out of the hospital. so sad :(\n";
+                                Sleep(3000); 
+                                exit(0);
+                            }
+                    }else if(monsterHp <= 0){
+                        
+                        monsterHp = 0;
+                        cout << "\n\n";
+                        monsterXp = 19 * monsterLevel;
+                        cout << "You Defeated " << currentMonster << " you are awarded with " << monsterXp << " Exp.\n";
+                        cout << "Nice :)";
+                        monsterXp = 0;
+                        LevelUp();
+                        Sleep(2500);
+                        HUD();
+                        Moving();
+                    }
+                    Sleep(1500);
+                    Combat(); 
+                }else{
+                    system("cls");
+                    cout << "Your level is not enough to use the Special Attack.\n";
+                    cout << "Your level must be 4 or higher than that.\n";
+                    Sleep(2500);
+                    Combat();  
+                }
+            }else {
+                system("cls");
+                cout << "You can use the Special Attack only once per round.\n";
+                Sleep(1500);
+                Combat();       
+            }
         }
         else if(playerAttack == 3){
+        }
+        else if(playerAttack == 4){
             //วิ่งหนีแบบใส่เกียร์หมา
             cout << "You try to run away...\n";
             Sleep(1250);
@@ -245,7 +302,6 @@ void Combat(){
                 Sleep(2000);
                 Combat();
             }
-
         }
         else {
             cout << "Wrong Input!!!";
