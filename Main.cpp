@@ -13,8 +13,8 @@ void CreateMonster();
 void LevelUp();
 
 string name = " ";
-int level = 0, xp = 0, health = 0, totalHealth = 0, maxHealth = 0, nextLevel = 0, heal = 0;
-int scalpelState = 0, ppeState = 0,SPcooldown = 0;
+int level = 0, xp = 0, health = 0, totalHealth = 0, maxHealth = 0, nextLevel = 0, heal = 0,atk=8;
+int scalpelState = 0, ppeState = 0,SPcooldown = 0, Scalpel=0, PPE=0;
 
 string monsterName[] = {"Nurse","Researcher","Doctor","Psychologist","Director","Janitor","Security guard"}; //ถ้าคิดตัวไรออกอีกก็เพิ่มได้ (ป้อง)
 string currentMonster = " ";
@@ -62,7 +62,7 @@ int main(){
 void HUD() { 
     Sleep(500);
     system("cls");
-    cout << "Name: " << name << "       Health: " << totalHealth << "\nLevel: " << level << "\nExp: " << xp << "\nExp to next level: " << nextLevel << "\n";
+    cout << "Name: " << name << "       Health: " << totalHealth+::PPE << "\nLevel: " << level << "\nExp: " << xp << "\nExp to next level: " << nextLevel << "\n";
 }
 
 //ตัวเลือกว่าจะทำอะไรต่อในหน้าหลัก (เพิ่มได้ & แก้ได้)
@@ -94,8 +94,67 @@ void Moving() {
         }
     }
     else if(choice == 2){
-        //************************************ ให้ว่านทำต่อจากตรงนี้แทน เพิ่มระบบ equipment เมื่อผู้เล่นเลือกเลข 2************************************************
-        //ตอนนี้เพิ่มไอเทมไปสองชิ้น เเละ เพิ่มระบบเช็คไอเทม เเต่ยังไม่ได้ใส่ stat ฝากทำด้วย
+        system("cls");
+        int ans;
+        cout << "Please select your equipment\n\n";
+        cout << "1. Scalpel\n";
+        cout << "2. PPE Suit\n";
+        cin >> ans;
+        if(ans == 1){
+            if(::scalpelState == 1){
+                ::Scalpel = 25;
+                system("cls");
+                cout << "You are equipping the Scalpel.\n";
+                Sleep(500);
+                system("cls");
+                cout << "You are equipping the Scalpel..\n";
+                Sleep(500);
+                system("cls");
+                cout << "You are equipping the Scalpel...\n";
+                Sleep(500);
+                system("cls");
+                cout << "Your damage is increase by 25.";
+                Sleep(1500);
+                HUD();
+                Moving(); 
+            }else{
+                system("cls");
+                cout << "You don't have this equipment yet.";
+                Sleep(1500);
+                HUD();
+                Moving(); 
+            }
+        }else if(ans == 2){
+            if(::ppeState == 1){
+                ::PPE = 150;
+                system("cls");
+                cout << "You are equipping the PPE Suit.\n";
+                Sleep(500);
+                system("cls");
+                cout << "You are equipping the PPE Suit..\n";
+                Sleep(500);
+                system("cls");
+                cout << "You are equipping the PPE Suit...\n";
+                Sleep(500);
+                system("cls");
+                cout << "Your Max HP is increase by 150.";
+                Sleep(1500);
+                HUD();
+                Moving(); 
+            }else{
+                system("cls");
+                cout << "You don't have this equipment yet.";
+                Sleep(1500);
+                HUD();
+                Moving(); 
+            }
+        }else{
+            cout << "Wrong Input!!!";
+            Sleep(500);
+            HUD();
+            Moving();
+        }
+        
     }
     else if(choice == 3){
         system("cls");
@@ -167,14 +226,14 @@ void CombatHUD(){
     Sleep(500);
     system("cls");
     cout << "Name: " << name << "       |       Monster Name: " << currentMonster << "\n";
-    cout << "Health: " << totalHealth << "       |       Monster Health: " << monsterHp << "\n";
+    cout << "Health: " << totalHealth+::PPE << "       |       Monster Health: " << monsterHp << "\n";
     cout << "Level: " << level << "          |       Monster Level: " << monsterLevel << "\n";
 }
 
 void Combat(){
     CombatHUD();
     int playerAttack;
-    int playerDamage = 8 * level/2; // <---------------------------- พี่เธียรปรับให้เป็นแบบ Random (stat ตีของ player)
+    int playerDamage = atk * level + ::Scalpel; // <---------------------------- พี่เธียรปรับให้เป็นแบบ Random (stat ตีของ player)
     int monsterAttack = 6 * monsterLevel/2; // <---------------------- พี่เธียรปรับให้เป็นแบบ Random (stat ตีของ Monster)
 
     if(totalHealth >= 1 && monsterHp >= 1){
@@ -196,7 +255,7 @@ void Combat(){
                 cout << "\n";
                 cout << "Monster is Atacking...\n";
                 totalHealth = totalHealth - monsterAttack;
-                cout << "You lost " << monsterAttack << " hp and your current hp is " << totalHealth << "\n";
+                cout << "You lost " << monsterAttack << " hp and your current hp is " << totalHealth+::PPE << "\n";
                 if (totalHealth <= 0){
                     totalHealth = 0;
                     system("cls");
@@ -242,7 +301,7 @@ void Combat(){
                         cout << "\n";
                         cout << "Monster is Atacking...\n";
                         totalHealth = totalHealth - monsterAttack;
-                        cout << "You lost " << monsterAttack << " hp and your current hp is " << totalHealth << "\n";
+                        cout << "You lost " << monsterAttack << " hp and your current hp is " << totalHealth+::PPE << "\n";
                             if(totalHealth <= 0){
                                 totalHealth = 0;
                                 system("cls");
@@ -312,6 +371,7 @@ void Combat(){
 }
 
 void LevelUp() {
+    ::atk = 8;
     monsterXp = 19 * monsterLevel;
     xp = xp + monsterXp;
 
