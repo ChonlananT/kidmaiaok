@@ -12,7 +12,7 @@ void CombatHUD();
 void Moving();
 void CreateMonster();
 void LevelUp();
-
+void story1();
 
 
 string name = " ";
@@ -33,7 +33,7 @@ int main(){
     totalHealth = health + ::PPE;
     maxHealth = totalHealth + ::PPE;
 
-
+    story1();
 
     //สร้างตัวละคร
     cout << "Enter Character Name: ";
@@ -499,4 +499,26 @@ void LevelUp() {
         Sleep(2500);
         HUD();
     }
+}
+
+void story1(){
+    string prologue1 = "\n\tProlouge......\n======================================\n13 February 2052 fisrt infecter was found.\nThe virus spread rapidly and used only 3 weeks to get over 5 countries including Thailand.\n\nThe Thai army successfully caught the first infecter in the country and sent to Krung Thep Maha Nakhon Hospital.\nThai government used 8 years to made detention area for the hospital......\n\n\nDuring that time infecter in other country got cured.\n======================================\n\n\n\n\n ";
+	int x1 = 0;
+	while (prologue1[x1] != '\0')
+	{
+		cout << prologue1[x1];
+		Sleep(50);
+		x1++;
+	};
+	system("pause");
+	system("cls");
+
+	string story1 = "\n\t15 February 2060 \n\n======================================\n\nGrrrrrrr......... Wait, what I just said ?\nWhy I'm here and these tight belts though, Grrrrrrr...\n\n======================================\n\n";
+	int x2 = 0;
+	while (story1[x2] != '\0')
+	{
+		cout << story1[x2];
+		Sleep(50);
+		x2++;
+	};
 }
