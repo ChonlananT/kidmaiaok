@@ -2,6 +2,9 @@
 #include <windows.h>
 #include <string>
 #include <ctime>
+#include <iomanip>
+#include <sstream>
+
 
 
 using namespace std;
@@ -43,7 +46,7 @@ int main(){
     
     //สร้างตัวละคร
     TextEffect("Enter Character Name: ",50);
-    cin >> name;
+    getline(cin,name);
     system("cls");
     //หน้าโหลดหลังจากสร้างตัวละครเสร็จ(ทำให้มีดูมีลูกเล่นมากขึ้นนิดนึง5555555)
     TextEffect("\n\n\n\t\tCreating Charecter.\n",50);
@@ -317,11 +320,24 @@ void CreateMonster(){
 }
 
 void CombatHUD(){
+    ostringstream temp1;
+    temp1<<totalHealth;
+    string num1 = temp1.str();
+    ostringstream temp2;
+    temp2<<level;
+    string num2 = temp2.str();
+    int space = 15;
     Sleep(500);
     system("cls");
-    cout << "Name: " << name << "       |       Monster Name: " << currentMonster << "\n";
-    cout << "Health: " << totalHealth+::PPE << "       |       Monster Health: " << monsterHp << "\n";
-    cout << "Level: " << level << "          |       Monster Level: " << monsterLevel << "\n";
+    cout << "Name: " << name;
+    for (int i=0;i<space-name.length()+1;i++) cout << " ";
+    cout << "|       Monster Name: " << currentMonster << "\n";
+    cout << "Health: " << totalHealth;
+    for (int i=0;i<space-num1.length()-1;i++) cout << " "; 
+    cout << "|       Monster Health: " << monsterHp << "\n";
+    cout << "Level: " << level;
+    for (int i=0;i<space-num2.length();i++) cout << " ";
+    cout << "|       Monster Level: " << monsterLevel << "\n";
 }
 
 void Combat(){
