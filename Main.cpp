@@ -12,7 +12,7 @@ void CombatHUD();
 void Moving();
 void CreateMonster();
 void LevelUp();
-void story1();
+void TextEffect(string,int);
 
 
 string name = " ";
@@ -33,20 +33,25 @@ int main(){
     totalHealth = health + ::PPE;
     maxHealth = totalHealth + ::PPE;
 
-    story1();
-
+    //prolouge
+    system("cls");
+    TextEffect("\n\tProlouge......\n======================================\n13 February 2052 fisrt infecter was found.\nThe virus spread rapidly and used only 3 weeks to get over 5 countries including Thailand.\n\nThe Thai army successfully caught the first infecter in the country and sent to Krung Thep Maha Nakhon Hospital.\nThai government used 8 years to made detention area for the hospital......\n\n\nDuring that time infecter in other country got cured.\n======================================\n\n\n\n\n ",50);
+    system("pause");
+	system("cls");
+    TextEffect("\n\t15 February 2060 \n\n======================================\n\nGrrrrrrr......... Wait, what I just said ?\n\nWhy I'm here and these tight belts though, Grrrrrrr...\n\n======================================\n\n",50);
+    
     //สร้างตัวละคร
-    cout << "Enter Character Name: ";
+    TextEffect("Enter Character Name: ",50);
     cin >> name;
-
+    system("cls");
     //หน้าโหลดหลังจากสร้างตัวละครเสร็จ(ทำให้มีดูมีลูกเล่นมากขึ้นนิดนึง5555555)
-    cout << "Creating Charecter.\n";
+    TextEffect("\n\n\n\t\tCreating Charecter.\n",50);
     Sleep(500);
     system("cls");
-    cout << "Creating Charecter..\n";
+    cout << "\n\n\n\t\tCreating Charecter..\n";
     Sleep(500);
     system("cls");
-    cout << "Creating Charecter...\n";
+    cout << "\n\n\n\t\tCreating Charecter...\n";
     Sleep(500);
     system("cls");
 
@@ -302,7 +307,7 @@ void Combat(){
                     system("cls");
                     cout << "You DIED! \nYou were level: " << level << " you got killed by " << currentMonster << ".\n";
                     Sleep(1000);
-                    cout << "You can't get out of the hospital. so sad :(\n";
+                    TextEffect("You can't get out of the hospital. so sad :(\n",50);
                     Sleep(3000); 
                     exit(0);
                 }
@@ -363,8 +368,19 @@ void Combat(){
                     }else if(monsterHp <= 0){
                         if(currentRoom >= 20){
                             system("cls");
-                            cout << "Congrats eiei\n";
-                            cout << ""; // เพิ่มบทตอนฉากจบให้หน่อย
+                            TextEffect("\n\n\t\t\t......",100);
+                            Sleep(1000);
+                            system("cls");
+                            TextEffect("\n\n\tYou finally made it, there's the hosital gate.",70);
+                            Sleep(1000);
+                            system("cls");
+                            TextEffect("\n\n\tWith all the brain you've taken, your intelligence has greatly increased....",70);
+                            Sleep(1000);
+                            system("cls");
+                            TextEffect("\n\n\tNow you're blended in with humans, no one can noticed what you are.",70);
+                            Sleep(1000);
+                            system("cls");
+                            TextEffect("\n\n\t\t\tBut the hunger inside never gone........",70);
                             Sleep(3000); 
                             exit(0);
                         }
@@ -462,9 +478,9 @@ void Combat(){
                 if (totalHealth <= 0){
                     totalHealth = 0;
                     system("cls");
-                    cout << "You DIED! \nYou were level: " << level << " you got killed by " << currentMonster << ".\n";
+                    cout << "\n\tYou DIED! \nYou were level: " << level << " you got killed by " << currentMonster << ".\n";
                     Sleep(1000);
-                    cout << "You can't get out of the hospital. so sad :(\n";
+                    TextEffect("You can't get out of the hospital. so sad :(\n",50);
                     Sleep(3000); 
                     exit(0);
                 }
@@ -501,24 +517,15 @@ void LevelUp() {
     }
 }
 
-void story1(){
-    string prologue1 = "\n\tProlouge......\n======================================\n13 February 2052 fisrt infecter was found.\nThe virus spread rapidly and used only 3 weeks to get over 5 countries including Thailand.\n\nThe Thai army successfully caught the first infecter in the country and sent to Krung Thep Maha Nakhon Hospital.\nThai government used 8 years to made detention area for the hospital......\n\n\nDuring that time infecter in other country got cured.\n======================================\n\n\n\n\n ";
-	int x1 = 0;
-	while (prologue1[x1] != '\0')
-	{
-		cout << prologue1[x1];
-		Sleep(50);
-		x1++;
-	};
-	system("pause");
-	system("cls");
-
-	string story1 = "\n\t15 February 2060 \n\n======================================\n\nGrrrrrrr......... Wait, what I just said ?\nWhy I'm here and these tight belts though, Grrrrrrr...\n\n======================================\n\n";
-	int x2 = 0;
-	while (story1[x2] != '\0')
-	{
-		cout << story1[x2];
-		Sleep(50);
-		x2++;
-	};
+void TextEffect(string a,int b)
+{
+    int x = 0;
+    while(a[x] != '\0')
+    {
+        cout << a[x];
+        Sleep(b);
+        x++;
+       
+    };
 }
+
