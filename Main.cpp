@@ -13,11 +13,12 @@ void Moving();
 void CreateMonster();
 void LevelUp();
 void TextEffect(string,int);
+void EndingText();
 
 
 string name = " ";
 int level = 0, xp = 0, health = 0, totalHealth = 0, maxHealth = 0, nextLevel = 0, heal = 0, currentRoom=1, healthPotion=0, chemicalX=0, atk = 8;
-int scalpelState = 0, ppeState = 0, Scalpel=0, PPE=0, SPcooldown=0;
+int scalpelState = 0, ppeState = 0, Scalpel=0, PPE=0, SPcooldown=0, restCooldown=0;
 string monsterName[] = {"Nurse","Researcher","Doctor","Psychologist","Director","Janitor","Security guard"}; //ถ้าคิดตัวไรออกอีกก็เพิ่มได้ (ป้อง)
 string currentMonster = " ";
 int monsterHp = 0, monsterXp , monsterLevel ;
@@ -79,6 +80,7 @@ void Moving() {
     cout << "1. Go to next room\n";
     cout << "2. Open inventory\n";
     cout << "3. Explore this room\n";
+    cout << "4. Rest\n";
     cout << "\n";
     
     cin >> choice;
@@ -94,7 +96,7 @@ void Moving() {
         cout << "You begin moving to the next room...\n";
         Sleep(500);
         system("cls");
-       
+        ::restCooldown--;
         ::currentRoom++;
         if(temp <= 80) { 
             if(currentRoom < 20){
@@ -193,7 +195,6 @@ void Moving() {
             cout << "Wrong Input!!!";
             Sleep(500);
             HUD();
-            Moving();
         }
     }    
     else if(choice == 3){
@@ -251,14 +252,63 @@ void Moving() {
             Combat();
         }
     }
+    else if(choice == 4){
+        system("cls");
+        cout << "Finding safe place to rest.\n";
+        Sleep(500);
+        system("cls");
+        cout << "Finding safe place to rest..\n";
+        Sleep(500);
+        system("cls");
+        cout << "Finding safe place to rest...\n";
+        Sleep(500);
+        system("cls");
+
+        int temp = rand()%100 + 1; 
+        if(temp <= 20){
+            if(currentRoom < 20){
+            CreateMonster();
+            string monster = monsterName[rand()%6];
+            cout << "You found the " << monster << "! Prepare to fight!\n";
+            currentMonster = monster;
+            Sleep(1500);
+            Combat();
+            }else{ // สร้าง BOSS
+                CreateMonster();
+                monsterLevel = level;
+                monsterHp = maxHealth+120;
+                string monster = monsterName[6];
+                cout << "You found the last boss " << monster << "! Prepare to your final fight!\n";
+                currentMonster = monster;
+                Sleep(2000);
+                Combat();
+            } 
+        }else if(::restCooldown == 0){
+                ::restCooldown++;
+                int x = maxHealth/4;
+                totalHealth += x;
+                cout << "You have rested and healed for " << x << " hp." << endl; 
+                Sleep(1500);
+                HUD();
+                Moving();
+        }else if(::restCooldown == 1){
+                system("cls");
+                cout << "You can rest only once per room.\n";
+                Sleep(1500);
+                HUD();
+                Moving();
+        }
+
+    }
     else{
         cout << "Wrong Input!!!";
         Sleep(500);
         Moving();
     } 
+
 }
 
-void CreateMonster(){ // ระบบสุ่มเกิดมอน พี่เธียรปรับได้ (stat สุ่มของ Monster) เพราะตอนนี้ยังไม่ค่อยบาลานซ์
+void CreateMonster(){ 
     monsterLevel = (rand()%3) + level;
     monsterHp = (rand()%(maxHealth/4)+((maxHealth/4)+1) * monsterLevel);
 
@@ -277,8 +327,8 @@ void CombatHUD(){
 void Combat(){
     CombatHUD();
     int playerAttack;
-    int playerDamage = atk * level + ::Scalpel; // <---------------------------- พี่เธียรปรับให้เป็นแบบ Random (stat ตีของ player)
-    int monsterAttack = 6 * monsterLevel/2; // <---------------------- พี่เธียรปรับให้เป็นแบบ Random (stat ตีของ Monster)
+    int playerDamage = atk * level + ::Scalpel; 
+    int monsterAttack = 6 * monsterLevel/2; 
 
     if(totalHealth >= 1 && monsterHp >= 1){
         cout << "\n";
@@ -313,11 +363,7 @@ void Combat(){
                 }
             }else if(monsterHp <= 0) {
                 if(currentRoom >= 20){
-                    system("cls");
-                    cout << "Congrats eiei\n";
-                    cout << ""; // เพิ่มบทตอนฉากจบให้หน่อย
-                    Sleep(3000); 
-                    exit(0);
+                    EndingText();
                 }
                 monsterHp = 0;
                 cout << "\n\n";
@@ -367,22 +413,7 @@ void Combat(){
                             }
                     }else if(monsterHp <= 0){
                         if(currentRoom >= 20){
-                            system("cls");
-                            TextEffect("\n\n\t\t\t......",100);
-                            Sleep(1000);
-                            system("cls");
-                            TextEffect("\n\n\tYou finally made it, there's the hosital gate.",70);
-                            Sleep(1000);
-                            system("cls");
-                            TextEffect("\n\n\tWith all the brain you've taken, your intelligence has greatly increased....",70);
-                            Sleep(1000);
-                            system("cls");
-                            TextEffect("\n\n\tNow you're blended in with humans, no one can noticed what you are.",70);
-                            Sleep(1000);
-                            system("cls");
-                            TextEffect("\n\n\t\t\tBut the hunger inside never gone........",70);
-                            Sleep(3000); 
-                            exit(0);
+                            EndingText();
                         }
                         monsterHp = 0;
                         cout << "\n\n";
@@ -529,3 +560,21 @@ void TextEffect(string a,int b)
     };
 }
 
+void EndingText(){
+    system("cls");
+    TextEffect("\n\n\t\t\t......",100);
+    Sleep(1000);
+    system("cls");
+    TextEffect("\n\n\tYou finally made it, there's the hosital gate.",70);
+    Sleep(1000);
+    system("cls");
+    TextEffect("\n\n\tWith all the brain you've taken, your intelligence has greatly increased....",70);
+    Sleep(1000);
+    system("cls");
+    TextEffect("\n\n\tNow you're blended in with humans, no one can noticed what you are.",70);
+    Sleep(1000);
+    system("cls");
+    TextEffect("\n\n\t\t\tBut the hunger inside YOU never gone........",70);
+    Sleep(3000); 
+    exit(0);
+}
