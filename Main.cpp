@@ -286,7 +286,10 @@ void Moving() {
                 Sleep(2000);
                 Combat();
             } 
-        }else if(::restCooldown == 0){
+        }else 
+        {
+            if(::restCooldown == 0)
+            {
                 ::restCooldown++;
                 int x = maxHealth/4;
                 totalHealth += x;
@@ -294,14 +297,17 @@ void Moving() {
                 Sleep(1500);
                 HUD();
                 Moving();
-        }else if(::restCooldown == 1){
+            }   
+            if(::restCooldown == 1)
+            {
                 system("cls");
                 cout << "You can rest only once per room.\n";
                 Sleep(1500);
                 HUD();
                 Moving();
-        }
+            }
 
+        }
     }
     else{
         cout << "Wrong Input!!!";
