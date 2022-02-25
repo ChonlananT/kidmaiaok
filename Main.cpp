@@ -268,7 +268,7 @@ void Moving() {
         system("cls");
 
         int temp = rand()%100 + 1; 
-        if(temp <= 20){
+        if(temp <= 10){
             if(currentRoom < 20){
             CreateMonster();
             string monster = monsterName[rand()%6];
@@ -520,7 +520,7 @@ void Combat(){
             system("cls");
            
             int x = rand() % 100 +1;
-            if(x >= 70){
+            if(x >= 60){
                 cout << "You escaped safely.\n";
                 ::currentRoom--;
                 ::SPcooldown=0;
