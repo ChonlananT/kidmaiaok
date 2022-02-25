@@ -269,6 +269,14 @@ void Moving() {
 
         int temp = rand()%100 + 1; 
         if(temp <= 10){
+            if(::restCooldown == 1)
+            {
+                system("cls");
+                cout << "You can rest only once per room.\n";
+                Sleep(1500);
+                HUD();
+                Moving();
+            }
             if(currentRoom < 20){
             CreateMonster();
             string monster = monsterName[rand()%6];
