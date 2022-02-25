@@ -4,7 +4,7 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
-
+#include<conio.h>
 
 
 using namespace std;
@@ -39,10 +39,10 @@ int main(){
 
     //prolouge
     system("cls");
-    TextEffect("\n\tProlouge......\n======================================\n13 February 2052 fisrt infecter was found.\nThe virus spread rapidly and used only 3 weeks to get over 5 countries including Thailand.\n\nThe Thai army successfully caught the first infecter in the country and sent to Krung Thep Maha Nakhon Hospital.\nThai government used 8 years to made detention area for the hospital......\n\n\nDuring that time infecter in other country got cured.\n======================================\n\n\n\n\n ",50);
+    TextEffect("\n\tProlouge......\n======================================\n13 February 2052 fisrt infecter was found.\nThe virus spread rapidly and used only 3 weeks to get over 5 countries including Thailand.\n\nThe Thai army successfully caught the first infecter in the country and sent to Krung Thep Maha Nakhon Hospital.\nThai government used 8 years to made detention area for the hospital......\n\n\nDuring that time infecter in other country got cured.\n======================================\n\n\n\n\n ",25);
     system("pause");
 	system("cls");
-    TextEffect("\n\t15 February 2060 \n\n======================================\n\nGrrrrrrr......... Wait, what I just said ?\n\nWhy I'm here and these tight belts though, Grrrrrrr...\n\n======================================\n\n",50);
+    TextEffect("\n\t15 February 2060 \n\n======================================\n\nGrrrrrrr......... Wait, what I just said ?\n\nWhy I'm here and these tight belts though, Grrrrrrr...\n\n======================================\n\n",25);
     
     //สร้างตัวละคร
     TextEffect("Enter Character Name: ",50);
@@ -294,7 +294,7 @@ void Moving() {
                 Sleep(2000);
                 Combat();
             } 
-        }else 
+        }else if(temp > 10)
         {
             if(::restCooldown == 0)
             {
@@ -405,6 +405,7 @@ void Combat(){
                 cout << "Nice :)";
                 monsterXp = 0;
                 LevelUp();
+                ::restCooldown = 0;
                 Sleep(2500);
                 HUD();
                 Moving();
@@ -457,6 +458,7 @@ void Combat(){
                         cout << "You Defeated " << currentMonster << " you are awarded with " << monsterXp << " Exp.\n";
                         cout << "Nice :)";
                         monsterXp = 0;
+                        ::restCooldown = 0;
                         LevelUp();
                         Sleep(2500);
                         HUD();
@@ -592,8 +594,8 @@ void TextEffect(string a,int b)
         cout << a[x];
         Sleep(b);
         x++;
-       
     };
+         
 }
 
 void EndingText(){
