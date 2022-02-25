@@ -27,7 +27,7 @@ string currentMonster = " ";
 int monsterHp = 0, monsterXp , monsterLevel ;
 
 int main(){
-    
+    SetConsoleTitle("Hubie");
     srand(time(0));
     
     level = 1;
@@ -371,9 +371,12 @@ void Combat(){
                 if (totalHealth <= 0){
                     totalHealth = 0;
                     system("cls");
-                    cout << "You DIED! \nYou were level: " << level << " you got killed by " << currentMonster << ".\n";
+                    TextEffect("\t G A M E O V E R",100);
+                    cout << "\n==========================================";
+                    cout << "\n\nYou were level: " << level << " you got killed by " << currentMonster << ".\n\n";
                     Sleep(1000);
                     TextEffect("You can't get out of the hospital. so sad :(\n",50);
+                    cout << "\n==========================================";
                     Sleep(3000); 
                     exit(0);
                 }
@@ -421,9 +424,12 @@ void Combat(){
                             if(totalHealth <= 0){
                                 totalHealth = 0;
                                 system("cls");
-                                cout << "You DIED! \nYou were level: " << level << " you got killed by " << currentMonster << ".\n";
+                                TextEffect("\t G A M E O V E R",100);
+                                cout << "\n==========================================";
+                                cout << "\n\nYou were level: " << level << " you got killed by " << currentMonster << ".\n\n";
                                 Sleep(1000);
-                                cout << "You can't get out of the hospital. so sad :(\n";
+                                TextEffect("You can't get out of the hospital. so sad :(\n",50);
+                                cout << "\n==========================================";
                                 Sleep(3000); 
                                 exit(0);
                             }
